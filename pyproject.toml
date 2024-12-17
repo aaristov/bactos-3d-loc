@@ -1,0 +1,26 @@
+[project]
+name = "bactos-3d-loc"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Andrey Aristov", email = "aaristov@pasteur.fr" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "big-fish>=0.6.2",
+    "dask>=2024.12.0",
+    "fire>=0.7.0",
+    "numpy<2",
+    "pandas>=2.2.3",
+    "tifffile>=2024.12.12",
+    "tqdm>=4.67.1",
+    "zarr>=2.18.3",
+]
+
+[project.scripts]
+bactos-3d-loc = "bactos_3d_loc:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

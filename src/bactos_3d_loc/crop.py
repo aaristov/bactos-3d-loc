@@ -19,7 +19,7 @@ def extract_crops(dask_array, droplets_df, output_zarr, crop_size=300):
     # Process each chip
     for chip in range(2):
         # Get coordinates for current chip
-        chip_coords = droplets_df[droplets_df['chip'] == chip]
+        chip_coords = droplets_df[droplets_df['axis-0'] == chip]
         
         if len(chip_coords) < 500:
             raise ValueError(f"Not enough coordinates for chip {chip}")

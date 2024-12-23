@@ -35,7 +35,7 @@ def extract_crops(dask_array, droplets_df, output_zarr, crop_size=300):
             # Extract crops for this batch
             batch_crops = []
             for _, row in batch_coords.iterrows():
-                y_center, x_center = int(row['y']), int(row['x'])
+                y_center, x_center = int(row['axis-1']), int(row['axis-2'])
                 
                 # Calculate crop boundaries
                 y_start = max(0, y_center - half_size)

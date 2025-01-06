@@ -1,6 +1,7 @@
 import os
 from tqdm import tqdm
 import tifffile as tf
+import pandas as pd
 from fire import Fire
 
 
@@ -55,7 +56,7 @@ def count(
                         )
                         f.write(f"{chip}, {well}, {frame}, 0, 0\n")
     print("saved: ", save_path)
-    n_cells_spots_df = pd.DataFrame(n_cells_spots)
+    n_cells_spots_df = pd.DataFrame(n_cells)
     n_cells_spots_df.to_csv(sp := save_path.replace(".csv", "_df.csv"))
     print("saved: ", sp)
 

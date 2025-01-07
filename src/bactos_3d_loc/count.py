@@ -3,7 +3,6 @@ from tqdm import tqdm
 import tifffile as tf
 import pandas as pd
 from fire import Fire
-import pandas as pd
 
 
 def count(
@@ -62,5 +61,5 @@ def count(
     print("saved: ", sp)
 
 
-if __name__ == "__main__":
+def main():
     Fire(count)

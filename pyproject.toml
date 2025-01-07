@@ -21,7 +21,9 @@ dependencies = [
 ]
 
 [project.scripts]
-bactos-3d-loc = "bactos_3d_loc:main"
+bactos-3d-loc = "bactos_3d_loc.loc3d:main"
+bactos-3d-crop = "bactos_3d_loc.crop:main"
+bactos-3d-count = "bactos_3d_loc.count:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -30,4 +32,5 @@ build-backend = "hatchling.build"
 [dependency-groups]
 dev = [
     "jupyter>=1.1.1",
+    "napari[all]>=0.5.5",
 ]

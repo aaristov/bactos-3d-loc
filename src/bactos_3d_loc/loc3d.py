@@ -1,17 +1,11 @@
 import os
-import sys
 import numpy as np
 import bigfish.detection as detection
-import bigfish.multistack as multistack
-import bigfish.plot as plot
 import dask.array as da
 from tqdm import tqdm
-import matplotlib.pyplot as plt
-import pandas as pd
 import tifffile as tf
-import json
-from pathlib import Path
 from fire import Fire
+from pathlib import Path
 
 
 def loc_recursive(
@@ -21,13 +15,15 @@ def loc_recursive(
     scale: tuple = (5, 0.65, 0.65),
     psf: tuple = (7.5, 1.3, 1.3),
 ):
+    out = os.path.join(prefix, results_folder)
+    os.makedirs(out, exist_ok=True)
     crops_dask = da.from_zarr(crops_zarr)
     _loc_recursive(
         crops_dask,
         scale=scale,
         pfs=psf,
         axes=[],
-        prefix=os.path.join(prefix, results_folder),
+        prefix=out
     )
 
 
@@ -107,5 +103,5 @@ def _loc_recursive(stack, scale, pfs, axes=[], prefix=""):
         return {"spots": [], "spots_post_decomposition": [], "dense_regions": []}
 
 
-if __name__ == "__main__":
+def main():
     Fire(loc_recursive)

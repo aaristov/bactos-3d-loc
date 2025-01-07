@@ -2,10 +2,10 @@ This pachage was created using UV
 
 Install `uv run pip install .`
 
-Crop droplets `python 0m bactos-3d-loc.crop`
+To crop droplets, run: `bactos-3d-crop TRITC-3D.zarr/0/ droplets.csv TRITC-3D-crops-300px.zarr`
 
-Localize 3d: `python bactos-3d-loc.loc3d`
+To localize 3d, run: `bactos-3d-loc TRITC-3D-crops-300px.zarr TRITC-3D-crops-300px.locs`
 
-Count localizations:
-`python bactos-3d-loc.count`
+To count localizations, run:
+`bactos-3d-count TRITC-3D-crops-300px.locs`
 

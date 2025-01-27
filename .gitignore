@@ -5,6 +5,8 @@ build/
 dist/
 wheels/
 *.egg-info
+*.zarr
+*checkpoint*
 
 # Virtual environments
 .venv

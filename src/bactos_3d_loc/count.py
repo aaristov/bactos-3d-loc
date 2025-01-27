@@ -21,7 +21,7 @@ def count(
     save_path = os.path.join(prefix_zarr, output)
 
     with open(save_path, mode="w", encoding='utf8') as f:
-        f.write("chip, well, frame, n_spots, n_spots_decomp\n")
+        f.write("chip,well,frame,n_spots,n_spots_decomp\n")
         n_cells = []
         for chip in tqdm(range(n_chips), desc="chip"):
             for well in tqdm(range(n_wells), desc="well"):
@@ -42,7 +42,7 @@ def count(
                                 "n_spots_decomp": len(locs_decomp),
                             }
                         )
-                        f.write(f"{chip}, {well}, {frame}, {len(locs)}, {len(locs)}\n")
+                        f.write(f"{chip}, {well}, {frame}, {len(locs)}, {len(locs_decomp)}\n")
                     except (FileNotFoundError, ValueError):
                         # print("no data: ", ppp)
                         n_cells.append(

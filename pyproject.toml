@@ -1,7 +1,7 @@
 [project]
 name = "bactos-3d-loc"
-version = "0.1.0"
-description = "Add your description here"
+version = "0.2.0"
+description = "Cuts proplets and counts bacteria"
 readme = "README.md"
 authors = [
     { name = "Andrey Aristov", email = "aaristov@pasteur.fr" }

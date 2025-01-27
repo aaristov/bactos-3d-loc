@@ -2,14 +2,30 @@ import numpy as np
 import dask.array as da
 import pandas as pd
 import zarr
+import nd2
 from tqdm import tqdm
 from fire import Fire
+import json
+
+
+def read_data(path):
+    if path.endswith(".nd2"):
+        ref = nd2.ND2File(path)
+        print(ref.sizes)
+        out = ref.to_dask()
+        print(out)
+        return out
+    elif path.endswith(".zarr") or path.endswith(".zarr/0/"):
+        return da.from_zarr(path)
+    else:
+        raise ValueError("File type not understood: expected .zarr or .nd2")
 
 
 def extract_crops(
-    tritc_3d_zarr,
+    data_path,
     droplets_csv,
     output_zarr,
+    transpose=None,
     crop_size=300,
     n_frames=55,
     n_droplets=500,
@@ -17,7 +33,11 @@ def extract_crops(
     n_zplanes=25
 ):
 
-    dask_array = da.from_zarr(tritc_3d_zarr)
+    dask_array = read_data(data_path)
+    if transpose:
+        shape = dask_array.shape
+        dask_array = dask_array.transpose(*transpose)
+        print(f"transpose from {shape} to {dask_array.shape}")
     droplets_df = pd.read_csv(droplets_csv, index_col=0)
     # Create empty zarr array with the final dimensions
     zzz = zarr.open(
@@ -53,3 +73,7 @@ def extract_crops(
 
 def main():
     Fire(extract_crops)
+
+
+if __name__ == "__main__":
+    main()

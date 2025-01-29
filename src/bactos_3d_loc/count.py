@@ -31,7 +31,11 @@ def count(
                             path.format(frame=frame, chip=chip, well=well)
                         )
                         locs_decomp = tf.imread(
-                            path_decomp.format(frame=frame, chip=chip, well=well)
+                            path_decomp.format(
+                                frame=frame,
+                                chip=chip,
+                                well=well
+                            )
                         )
                         n_cells.append(
                             {
@@ -42,7 +46,8 @@ def count(
                                 "n_spots_decomp": len(locs_decomp),
                             }
                         )
-                        f.write(f"{chip}, {well}, {frame}, {len(locs)}, {len(locs_decomp)}\n")
+                        ll, ld = len(locs), len(locs_decomp)
+                        f.write(f"{chip},{well},{frame},{ll},{ld}\n")
                     except (FileNotFoundError, ValueError):
                         # print("no data: ", ppp)
                         n_cells.append(
@@ -54,7 +59,7 @@ def count(
                                 "n_spots_decomp": 0,
                             }
                         )
-                        f.write(f"{chip}, {well}, {frame}, 0, 0\n")
+                        f.write(f"{chip},{well},{frame},0,0\n")
     print("saved: ", save_path)
     n_cells_spots_df = pd.DataFrame(n_cells)
     n_cells_spots_df.to_csv(sp := save_path.replace(".csv", "_df.csv"))

@@ -1,13 +1,18 @@
 import os
+import sys
 from tqdm import tqdm
 import tifffile as tf
 import pandas as pd
 from fire import Fire
+import logging
 
+level = os.environ.get("loglevel", "WARNING")
+logging.basicConfig(level=level)
+log = logging.getLogger(__name__)
 
 def count(
-    prefix_zarr, 
-    locs_folder="locs", 
+    prefix_zarr,
+    locs_folder="locs",
     n_chips=2,
     n_wells=500,
     n_frames=37,
@@ -18,8 +23,8 @@ def count(
     """counts 3d localizations from tif files and saves csv"""
     path_decomp = os.path.join(prefix_zarr, locs_folder, spots_decomp_format)
     path = os.path.join(prefix_zarr, locs_folder, spots_format)
+    log.debug("path format: ", path)
     save_path = os.path.join(prefix_zarr, output)
-
     with open(save_path, mode="w", encoding='utf8') as f:
         f.write("chip,well,frame,n_spots,n_spots_decomp\n")
         n_cells = []
@@ -28,6 +33,7 @@ def count(
                 for frame in range(n_frames):
                     try:
                         locs = tf.imread(
+                            ppp :=
                             path.format(frame=frame, chip=chip, well=well)
                         )
                         locs_decomp = tf.imread(
@@ -49,7 +55,7 @@ def count(
                         ll, ld = len(locs), len(locs_decomp)
                         f.write(f"{chip},{well},{frame},{ll},{ld}\n")
                     except (FileNotFoundError, ValueError):
-                        # print("no data: ", ppp)
+                        log.debug("no data: ", ppp)
                         n_cells.append(
                             {
                                 "chip": chip,
@@ -68,3 +74,7 @@ def count(
 
 def main():
     Fire(count)
+
+
+if __name__ == "__main__":
+    main()
